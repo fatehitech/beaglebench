@@ -2,7 +2,7 @@ import os, stat
 from distutils import dir_util
 from subprocess import call, check_output
 
-def make():
+def make(device_node):
     root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     cache = os.path.join(root, 'cache', 'images')
     baseURL = "https://rcn-ee.net/rootfs/bb.org/release/2015-03-01/lxde-4gb"
@@ -12,7 +12,7 @@ def make():
     archive_name = image_name+".img.xz"
     archive = cache+"/"+archive_name
     archive_url = baseURL+"/"+archive_name
-    if file_exists(img): return interactive_write(img)
+    if file_exists(img): return interactive_write(img, device_node)
     if file_exists(archive) and checksum_match(archive, archive_checksum):
         extract_archive(archive)
     else:
@@ -42,10 +42,9 @@ def is_block_device(filename):
     else:
         return stat.S_ISBLK(mode)
 
-def interactive_write(fp):
+def interactive_write(fp, node=""):
     print "Here's the output of lsblk"
     call(['lsblk'])
-    node = ""
     prompt = "Enter the top-level device path of SD card (e.g. /dev/sdb): "
     while not is_block_device(node): node = raw_input(prompt).strip()
     prompt = "Will completely erase %s -- continue? (y/N): " % node

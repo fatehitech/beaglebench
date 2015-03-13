@@ -16,9 +16,9 @@ class Commands:
     Communication with the BeagleBone is conducted via SSH over the USB network
     """
 
-    def sd(self):
+    def sd(self, device_node=None):
         '''Interactively prepare an SD card'''
-        bb.makeSD()
+        bb.makeSD(device_node)
 
     def setup(self):
         '''Transfer and run all setup scripts on the BeagleBone'''
@@ -31,9 +31,13 @@ class Commands:
         '''Reboot the BeagleBone'''
 #	ssh -o ConnectTimeout=1 -o LogLevel=Error root@192.168.7.2 reboot
 
+
 if __name__ == "__main__":
+    __name__ = "BeagleBench"
+    action = None
     try: action = getattr(Commands(), sys.argv[1])
-    except IndexError: print help(Commands)
-    except AttributeError: print help(Commands)
-    try: action()
-    except KeyboardInterrupt: sys.exit(1)
+    except IndexError: help(Commands)
+    except AttributeError: help(Commands)
+    if (action):
+        try: action(*sys.argv[2:len(sys.argv)])
+        except KeyboardInterrupt: sys.exit(1)
