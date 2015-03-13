@@ -1,10 +1,5 @@
 #!/bin/bash
-source Image/config.sh
 source Image/writer.sh
-img="Image/$image_name.img"
-archive_name="$image_name.img.xz"
-archive="Image/$archive_name"
-archive_url="$image_remote_root/$archive_name"
 if [[ -f $img ]]; then
   write_image $img
 elif [[ -f $archive ]]; then

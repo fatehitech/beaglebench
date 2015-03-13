@@ -4,7 +4,6 @@ Beaglebench is a folder structure, a few scripts, and a couple of patterns that 
 
 ## Usage
 
-Clone it down and being customizing
 
 ## Features
 
