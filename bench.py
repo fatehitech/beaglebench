@@ -35,4 +35,5 @@ if __name__ == "__main__":
     try: action = getattr(Commands(), sys.argv[1])
     except IndexError: print help(Commands)
     except AttributeError: print help(Commands)
-    action()
+    try: action()
+    except KeyboardInterrupt: sys.exit(1)
