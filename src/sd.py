@@ -35,6 +35,7 @@ def extract_archive(fp):
     call(['unxz', fp]);
 
 def is_block_device(filename):
+    if not filename: return False
     try:
         mode = os.lstat(filename).st_mode
     except OSError:

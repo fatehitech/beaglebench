@@ -13,7 +13,14 @@ except ImportError:
 
 class Commands:
     """
-    Communication with the BeagleBone is conducted via SSH over the USB network
+    These are all the commands avaiable to you.
+
+    Some commands can take optional arguments.
+    E.g. If you know your SD card is on /dev/sdb you could go
+        ./bb sd /dev/sdb
+    and /dev/sdb will be passed in as the device_node
+
+    Any communication with the BeagleBone is via SSH by means of the USB network
     """
 
     def sd(self, device_node=None):
@@ -33,7 +40,7 @@ class Commands:
 
 
 if __name__ == "__main__":
-    __name__ = "BeagleBench"
+    __name__ = "BeagleBench CLI"
     action = None
     try: action = getattr(Commands(), sys.argv[1])
     except IndexError: help(Commands)
