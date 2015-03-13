@@ -1,11 +1,11 @@
-for n in 0 1 2
+for n in 0 2
 do
   tty=/dev/ttyO$n
-  echo -n "Checking $tty ... "
+  echo -n "Checking existence of $tty ... "
   if test -c $tty; then
     echo "OK"
   else
-    echo "ERROR"
+    echo "ERROR: $tty does not exist"
     exit 1
   fi
 done

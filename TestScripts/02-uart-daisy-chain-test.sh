@@ -1,3 +1,6 @@
+if [[ -n $skip_uart_daily_chain_test ]]; then
+  echo "Skipping... Enable it in config.sh)"
+else
 cat <<PYTHON | python
 import serial
 
@@ -24,3 +27,4 @@ assert UART0.read(64) == "hello", "expected data written to UART2 to be readable
 UART0.write("goodbye")
 assert UART2.read(64) == "goodbye", "expected data written to UART0 to be readable on UART2"
 PYTHON
+fi

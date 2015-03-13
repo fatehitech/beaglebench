@@ -11,6 +11,7 @@ fi
 script=/tmp/script
 cat <<EOF > $script
 set -e # Exit on error
+$(cat config_vars.sh)
 EOF
 
 for part in $(ls $scripts)
