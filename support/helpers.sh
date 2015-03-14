@@ -8,14 +8,13 @@ fi
 
 script=/tmp/script
 echo "set -e # Exit on error" > $script
-if [[ -f config_vars.sh ]]; then
-  echo "$(cat config_vars.sh)" > $script
+if [[ -f vars.sh ]]; then
+  echo "$(cat vars.sh)" > $script
 fi
 
 script_listing=$(ls $scripts_dir)
-script_paths=( $script_listing )
 
-for child_script in $script_paths
+for child_script in $script_listing
 do
   child_script_path=$scripts_dir/$child_script
   content=$(cat $child_script_path)
