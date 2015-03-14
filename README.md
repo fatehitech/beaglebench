@@ -49,3 +49,33 @@ It can assist you in the development and testing of alterations to the running b
 `./bb test` runs all the *.sh scripts in ./test as though they were on the machine. This is where you will want to verify that things have been setup correctly. You should run this after setup and after reboot. Anything exiting non-zero will throw an error
 
 For more options and additional information, execute `./bb` for help.
+
+Here is the in-app help:
+
+```
+Help on class Commands in module BeagleBench CLI:
+
+class Commands
+ |  These are all the commands avaiable to you.
+ |  
+ |  Some commands can take optional arguments.
+ |  E.g. If you know your SD card is on /dev/sdb you could go
+ |      ./bb sd /dev/sdb
+ |  and /dev/sdb will be passed in as the device_node
+ |  
+ |  Any communication with the BeagleBone is via SSH by means of the USB network
+ |  
+ |  Methods defined here:
+ |  
+ |  reboot(self)
+ |      Reboot the BeagleBone
+ |  
+ |  sd(self, device_node=None)
+ |      Interactively prepare an SD card
+ |  
+ |  setup(self)
+ |      Transfer and run all setup scripts on the BeagleBone
+ |  
+ |  test(self)
+ |      Transfer and run all test scripts on the BeagleBone
+```
