@@ -1,10 +1,9 @@
-import os, stat
+import os, stat, repo
 from distutils import dir_util
 from subprocess import call, check_output
 
 def make(device_node):
-    root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-    cache = os.path.join(root, 'cache', 'images')
+    cache = os.path.join(repo.root, 'cache', 'images')
     baseURL = "https://rcn-ee.net/rootfs/bb.org/release/2015-03-01/lxde-4gb"
     image_name = "bone-debian-7.8-lxde-4gb-armhf-2015-03-01-4gb"
     archive_checksum = "c848627722b7a5f7bc89791cc8949e3b"

@@ -29,15 +29,15 @@ class Commands:
 
     def setup(self):
         '''Transfer and run all setup scripts on the BeagleBone'''
-#	bash -c "source Support/helpers.sh; remotely_run_scripts_in SetupScripts"
+        bb.remotelyRunScriptsIn('setup')
 
     def test(self):
         '''Transfer and run all test scripts on the BeagleBone'''
+        bb.remotelyRunScriptsIn('test')
 
     def reboot(self):
         '''Reboot the BeagleBone'''
-#	ssh -o ConnectTimeout=1 -o LogLevel=Error root@192.168.7.2 reboot
-
+        bb.rebootBeagleBone()
 
 if __name__ == "__main__":
     __name__ = "BeagleBench CLI"

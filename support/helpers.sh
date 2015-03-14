@@ -6,10 +6,11 @@ if [[ ! -d $scripts_dir ]]; then
   exit 1
 fi
 
-
 script=/tmp/script
 echo "set -e # Exit on error" > $script
-echo "$(cat config_vars.sh)" > $script
+if [[ -f config_vars.sh ]]; then
+  echo "$(cat config_vars.sh)" > $script
+fi
 
 script_listing=$(ls $scripts_dir)
 script_paths=( $script_listing )
@@ -22,7 +23,7 @@ do
   echo "$content" >> $script
 done
 
-cat $script | ssh -o ConnectTimeout=1 -o LogLevel=Error root@192.168.7.2 bash
+cat $script | ssh -o ConnectTimeout=1 -o LogLevel=Error $BEAGLEBONE_USER@$BEAGLEBONE_HOST bash
 
 return $?
 }
