@@ -24,12 +24,13 @@ These programs must be available on your workbench machine:
 
 ## Usage
 
-Create a new beaglebench project:
+Install and setup a new project:
 
 ```
+git clone git@github.com:fatehitech/beaglebench ~/.beaglebench
 mkdir my-bench
 cd my-bench
-curl -o bb https://raw.githubusercontent.com/fatehitech/beaglebench/master/bench.py
+ln -s ~/.beaglebench/bench.py bb
 chmod a+x bb
 ```
 
