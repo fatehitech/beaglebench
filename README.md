@@ -1,6 +1,8 @@
 # beaglebench
 
-Beaglebench provides a python-based task runner for people who work with the BeagleBone. It gives you a simple way to create SD cards and perform post-install configuration and testing.
+This project aims to provide a "Workbench-like" experience for people who work with the BeagleBone
+
+The main tool is a python-based task runner (bench.py) that you symlink into your project. It has commands that automate creation of SD cards and performance of post-install configuration and test running.
 
 By running scripts from a pristine, official image, you can iterate more rapidly than if you were creating custom images. In addition, if you write your scripts in an idempotent way (same script can be run over and over, on the same machine, without consequence), you have a repeatable recipe for performing these customizations while maintaining a tight feedback loop.
 
@@ -58,26 +60,28 @@ Here is the in-app help:
 Help on class Commands in module BeagleBench CLI:
 
 class Commands
- |  These are all the commands avaiable to you.
- |  
- |  Some commands can take optional arguments.
+ |  Commands are implemented as methods in this object
+ |
+ |  Some commands may take arguments.
  |  E.g. If you know your SD card is on /dev/sdb you could go
  |      ./bb sd /dev/sdb
  |  and /dev/sdb will be passed in as the device_node
- |  
+ |
  |  Any communication with the BeagleBone is via SSH by means of the USB network
- |  
+ |
+ |  Add more functionality by editing /Users/keyvan/.beaglebench/bench.py
+ |
  |  Methods defined here:
- |  
+ |
  |  reboot(self)
  |      Reboot the BeagleBone
- |  
+ |
  |  sd(self, device_node=None)
  |      Interactively prepare an SD card
- |  
+ |
  |  setup(self)
  |      Transfer and run all setup scripts on the BeagleBone
- |  
+ |
  |  test(self)
  |      Transfer and run all test scripts on the BeagleBone
 ```
