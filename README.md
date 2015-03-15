@@ -1,6 +1,6 @@
 # beaglebench
 
-This project aims to provide a "Workbench-like" experience for people who work with the BeagleBone
+This project aims to provide a "workbench-like" experience for people who work with the BeagleBone
 
 The main tool is a python-based task runner (bench.py) that you symlink into your project. It has commands that automate creation of SD cards and run remote scripts like a continuous integration service would (by this I mean that no command in the script fail without your knowledge, and these failures stop the job immediately so you can work fast).
 
