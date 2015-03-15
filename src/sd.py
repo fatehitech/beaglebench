@@ -1,4 +1,5 @@
-import os, stat, repo
+import os, stat, repo, hashlib
+import platform_specific as helpers
 from distutils import dir_util
 from subprocess import call, check_output
 
@@ -16,14 +17,24 @@ def make(device_node):
         extract_archive(archive)
     else:
         download_archive(archive_url, archive)
-    make()
+    make(device_node)
 
 def file_exists(path):
     return os.path.isfile(path)
 
+def md5sum(fp, block_size=2**20):
+    f = open(fp, 'rb')
+    md5 = hashlib.md5()
+    while True:
+        data = f.read(block_size)
+        if not data:
+            break
+        md5.update(data)
+    return md5.hexdigest()
+
 def checksum_match(fp, expected):
     print "Verifying "+fp
-    return check_output(['md5sum', fp]).split(' ')[0] == expected
+    return md5sum(fp) == expected
 
 def download_archive(url, filepath):
     dir_util.mkpath(os.path.dirname(filepath))
@@ -43,8 +54,7 @@ def is_block_device(filename):
         return stat.S_ISBLK(mode)
 
 def interactive_write(fp, node=""):
-    print "Here's the output of lsblk"
-    call(['lsblk'])
+    helpers.listBlockDevices()
     prompt = "Enter the top-level device path of SD card (e.g. /dev/sdb): "
     while not is_block_device(node): node = raw_input(prompt).strip()
     prompt = "Will completely erase %s -- continue? (y/N): " % node

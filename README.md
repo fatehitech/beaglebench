@@ -8,6 +8,8 @@ I've found this to be my favorite workflow so far that I've been trying to figur
 
 # Requirements
 
+Linux or Mac
+
 These programs must be available on your workbench machine:
 
 * python
@@ -15,8 +17,7 @@ These programs must be available on your workbench machine:
 * ssh
 * dd
 * unxz
-* lsblk
-* md5sum
+* lsblk (diskutil will be used on mac)
 * git
 * bash
 * sudo
