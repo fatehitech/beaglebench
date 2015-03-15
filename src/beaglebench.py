@@ -1,19 +1,15 @@
-import os, subprocess, repo, glob
-from sd import make as makeSD
+import os, glob, helper
+from sd import make as make_sd
 
-os.environ['BEAGLEBONE_USER'] = "root"
-os.environ['BEAGLEBONE_HOST'] = "192.168.7.2"
-
-def remotelyRunScriptsIn(dirpath):
-    if os.path.isdir(dirpath):
-        shellscripts = glob.glob(dirpath+'/*.sh')
-        if len(shellscripts) > 0:
-            helpers = repo.root+'/support/helpers.sh'
-            subprocess.call(['bash', '-c', 'source '+helpers+' && remotely_run_scripts_in '+dirpath])
-        else:
-            print dirpath+" has no files ending in .sh"
+def remotely_run_scripts_in(dirpath):
+    if not os.path.isdir(dirpath): print "No such directory: " +dirpath
     else:
-        print "No such directory: " +dirpath
+        shellscripts = glob.glob(dirpath+'/*.sh')
+        if len(shellscripts) is 0: print dirpath+" has no files ending in .sh"
+        else:
+            status = helper.call('remotely_run_scripts_in '+dirpath)
+            if status is 0: pass
+            else: print "ERROR: Remote script exited with non-zero status %d" % status
 
-def rebootBeagleBone():
-    subprocess.call(['bash', '-c', "ssh -o ConnectTimeout=1 -o LogLevel=Error $BEAGLEBONE_USER@$BEAGLEBONE_HOST reboot"])
+def reboot_beaglebone():
+    helper.call('reboot_beaglebone')

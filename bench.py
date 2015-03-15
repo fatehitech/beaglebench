@@ -1,43 +1,39 @@
 #!/usr/bin/env python
-import os, sys, subprocess
-
-bb_upstream = "https://github.com/fatehitech/beaglebench"
-bb_path = os.path.join(os.environ['HOME'], '.beaglebench')
+import os, sys
+script_path = os.path.realpath(__file__)
+bb_path = os.path.dirname(script_path)
 sys.path.append(os.path.join(bb_path, 'src'))
-
-try:
-    import beaglebench as bb
-except ImportError:
-    subprocess.call(['git', 'clone', bb_upstream, bb_path])
-    import beaglebench as bb
+import beaglebench as bb
 
 class Commands:
-    """
-    These are all the commands avaiable to you.
+    __doc__ =  """
+        Commands are implemented as methods in this object
 
-    Some commands can take optional arguments.
-    E.g. If you know your SD card is on /dev/sdb you could go
-        ./bb sd /dev/sdb
-    and /dev/sdb will be passed in as the device_node
+        Some commands may take arguments.
+        E.g. If you know your SD card is on /dev/sdb you could go
+            ./bb sd /dev/sdb
+        and /dev/sdb will be passed in as the device_node
 
-    Any communication with the BeagleBone is via SSH by means of the USB network
-    """
+        Any communication with the BeagleBone is via SSH by means of the USB network
+
+        Add more functionality by editing %s
+        """ % script_path
 
     def sd(self, device_node=None):
         '''Interactively prepare an SD card'''
-        bb.makeSD(device_node)
+        bb.make_sd(device_node)
 
     def setup(self):
         '''Transfer and run all setup scripts on the BeagleBone'''
-        bb.remotelyRunScriptsIn('setup')
+        bb.remotely_run_scripts_in('setup')
 
     def test(self):
         '''Transfer and run all test scripts on the BeagleBone'''
-        bb.remotelyRunScriptsIn('test')
+        bb.remotely_run_scripts_in('test')
 
     def reboot(self):
         '''Reboot the BeagleBone'''
-        bb.rebootBeagleBone()
+        bb.reboot_beaglebone()
 
 if __name__ == "__main__":
     __name__ = "BeagleBench CLI"
