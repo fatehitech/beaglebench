@@ -2,27 +2,30 @@
 
 This project aims to provide a "Workbench-like" experience for people who work with the BeagleBone
 
-The main tool is a python-based task runner (bench.py) that you symlink into your project. It has commands that automate creation of SD cards and performance of post-install configuration and test running.
+The main tool is a python-based task runner (bench.py) that you symlink into your project. It has commands that automate creation of SD cards and run remote scripts like a continuous integration service would (by this I mean that no command in the script fail without your knowledge, and these failures stop the job immediately so you can work fast).
 
-By running scripts from a pristine, official image, you can iterate more rapidly than if you were creating custom images. In addition, if you write your scripts in an idempotent way (same script can be run over and over, on the same machine, without consequence), you have a repeatable recipe for performing these customizations while maintaining a tight feedback loop.
+I have found that by using this method of running remote scripts from a pristine, official image, on a real beaglebone, I can achieve more accurate feedback faster than I could get while walking the route in which one builds a custom image at the SD card preparation phase.
 
-I've found this to be my favorite workflow so far that I've been trying to figuring out how to work with the beaglebone in a consistent, more rigorous manner.
+If you try this workflow, I recommend that you write your scripts in an idempotent way (same script can be run over and over, on the same machine, without consequence). This way you can have a very tight feedback loop. To learn more about this, check out tools like Ansible and Chef as they are the prime inspiration for beaglebench.
+
+Works in Linux and Mac. You can probably get Windows to work fairly easily if you want. The things that will fail in windows are:
+
+* downloading images (happens during `./bb sd` using `curl`)
+* extracting images (happens during `./bb sd` using `unxz`)
+* listing block devices (happens during `./bb sd` using `lsblk` or `diskutil list`)
+* writing image to block device (happens during `./bb sd` using `dd` with `sudo`)
+* running remote scripts (happens during `./bb setup` and `./bb test` using local `bash` to run functions that use `ssh`)
 
 # Requirements
 
-Linux or Mac
-
-These programs must be available on your workbench machine:
-
-* python
-* curl
-* ssh
-* dd
-* unxz
-* lsblk (diskutil will be used on mac)
-* git
-* bash
-* sudo
+* `python`
+* `unxz`
+* `curl`
+* `ssh`
+* `dd`
+* `bash`
+* `sudo`
+* `lsblk` or `diskutil`
 
 ## Usage
 
