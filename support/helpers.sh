@@ -1,3 +1,16 @@
+function ssh_beaglebone() {
+ssh \
+  -o LogLevel=Error \
+  -o ConnectTimeout=1 \
+  -o StrictHostKeyChecking=no \
+  -o UserKnownHostsFile=/dev/null \
+  $BEAGLEBONE_USER@$BEAGLEBONE_HOST $@
+}
+
+function reboot_beaglebone() {
+ssh_beaglebone reboot
+}
+
 function remotely_run_scripts_in() {
 scripts_dir=$1
 
@@ -22,7 +35,7 @@ do
   echo "$content" >> $script
 done
 
-cat $script | ssh -o ConnectTimeout=1 -o LogLevel=Error $BEAGLEBONE_USER@$BEAGLEBONE_HOST bash
+cat $script | ssh_beaglebone bash
 
 return $?
 }
