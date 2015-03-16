@@ -41,6 +41,40 @@ EOF
 chmod a+x bb
 ```
 
+If you wish to extend the tasks with your own custom ones (like install a kernel) you can try this technique.
+
+Here you can see instead of having `bb` be a simple bash script, it's actually a script that subclasses the `bench.py` Commands class
+
+```python
+#!/usr/bin/env python
+import os, sys
+bb_path = os.path.join(os.environ['HOME'],'.beaglebench')
+sys.path.append(os.path.join(bb_path, 'src'))
+import beaglebench as bb
+sys.path.append(os.path.join(bb_path))
+import bench
+
+workbench = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.join(workbench, 'kernel'))
+import kernel_installation
+
+class Commands(bench.Commands):
+    def install_kernel(self, device_node=None):
+        '''Interactively install kernel to SD card'''
+        kernel_installation.install_to(device_node)
+
+
+if __name__ == "__main__":
+    __name__ = "BeagleBench CLI"
+    action = None
+    try: action = getattr(Commands(), sys.argv[1])
+    except IndexError: help(Commands)
+    except AttributeError: help(Commands)
+    if (action):
+        try: action(*sys.argv[2:len(sys.argv)])
+        except KeyboardInterrupt: sys.exit(1)
+```
+
 ## Features
 
 It can create an SD card for your beaglebone:
