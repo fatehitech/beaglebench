@@ -45,6 +45,7 @@ do
   else
     content=$(cat $child_script_path)
     echo "echo 'Running $child_script_path'" >> $script
+    echo "set -e # Exit on error" >> $script
     echo "$content" >> $script
   fi
 done
