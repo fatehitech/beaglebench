@@ -35,6 +35,10 @@ class Commands:
         '''Reboot the BeagleBone'''
         bb.reboot_beaglebone()
 
+    def ssh(self):
+        '''SSH into the BeagleBone'''
+        bb.ssh()
+
 if __name__ == "__main__":
     __name__ = "BeagleBench CLI"
     action = None

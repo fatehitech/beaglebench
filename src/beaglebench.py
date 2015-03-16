@@ -13,3 +13,6 @@ def remotely_run_scripts_in(dirpath):
 
 def reboot_beaglebone():
     helper.call('reboot_beaglebone')
+
+def ssh():
+    helper.call('ssh_beaglebone')
