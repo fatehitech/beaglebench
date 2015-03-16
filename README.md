@@ -33,9 +33,11 @@ Install and setup a new project:
 
 ```
 git clone git@github.com:fatehitech/beaglebench ~/.beaglebench
-mkdir my-bench
-cd my-bench
-ln -s ~/.beaglebench/bench.py bb
+mkdir my-bench && cd my-bench
+cat <<EOF > bb
+#!/bin/bash
+python ~/.beaglebench/bench.py $@
+EOF
 chmod a+x bb
 ```
 
