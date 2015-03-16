@@ -90,3 +90,18 @@ class Commands
  |  test(self)
  |      Transfer and run all test scripts on the BeagleBone
 ```
+
+## Variables and Skipping
+
+You can add a file `vars.sh` to your directory and define variables here. This file is sourced into the local and remote environment and so the variables defined here are available in your setup and test scripts.
+
+You may want to skip some scripts. For example if you have scripts `setup/my-long-setup.sh` and `test/my-long-test.sh` you can skip them by defining a special variable `skip` in `vars.sh` like so:
+
+```bash
+skip=(
+  "setup/my-long-setup.sh"
+  "test/my-long-test.sh"
+)
+```
+
+This way, these two scripts will be skipped during remote execution.
