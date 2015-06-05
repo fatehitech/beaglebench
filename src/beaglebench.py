@@ -1,4 +1,4 @@
-import os, glob, helper, sd, binary_cache, repo
+import os, glob, helper, sd, repo
 
 def make_sd(device_node):
     sd.make(device_node)
