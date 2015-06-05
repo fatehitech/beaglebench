@@ -1,5 +1,7 @@
-import os, glob, helper
-from sd import make as make_sd
+import os, glob, helper, sd, binary_cache, repo
+
+def make_sd(device_node):
+    sd.make(device_node)
 
 def remotely_run_scripts_in(dirpath):
     if not os.path.isdir(dirpath): print "No such directory: " +dirpath
