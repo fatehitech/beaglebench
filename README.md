@@ -55,27 +55,51 @@ sys.path.append(os.path.join(bb_path))
 import bench
 
 workbench = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.join(workbench, 'kernel'))
-import kernel_installation
+sys.path.append(os.path.join(workbench, 'src'))
+import aws, vbox, subprocess
 
 class Commands(bench.Commands):
-    def install_kernel(self, device_node=None):
-        '''Interactively install kernel to SD card'''
-        kernel_installation.install_to(device_node)
+    def get_kernel(self):
+        return aws.get("Linux-source-3.8.13-20140626.tar.gz", "4884f9c2502aecae8fe9cc9d7fa972b8")
 
+    def get_rootfs(self):
+        return aws.get("rootfs-Debian.tar.gz", "47afa42d367335d9399a8ff95b855d71")
 
-if __name__ == "__main__":
-    __name__ = "BeagleBench CLI"
-    action = None
-    try: action = getattr(Commands(), sys.argv[1])
-    except IndexError: help(Commands)
-    except AttributeError: help(Commands)
-    if (action):
-        try: action(*sys.argv[2:len(sys.argv)])
-        except KeyboardInterrupt: sys.exit(1)
+    def vm(self, *etc):
+        ''' Virtual machine commands '''
+        return bench.cli(vbox.Commands, 1)
+
+output = bench.cli(Commands)
+if output: print output
 ```
 
-## Features
+The above command `vm` shows off the "nestability" of these command classes. The 2nd argument to bench.cli is how much to offset the arguments by.
+
+Here is the simplified content of the `vbox` module so as to explain how the nesting works:
+
+```python
+import block_device
+
+class Commands:
+    def start(self, vm, device_node=None, ssh_user="keyvan"):
+        '''Attach an SD card to a virtualbox vm'''
+        vm = VM(vm)
+        if vm.running(): return vm.ssh(ssh_user)
+        node = block_device.select(device_node)
+        vmdk = os.path.join(tmp.tmp(), node.replace('/','_')+'.vmdk')
+        if vm.has_attachment(vmdk): vm.detach(vmdk)
+        create_raw_vmdk(node, vmdk)
+        vm.attach(vmdk)
+        unmount(node)
+        vm.start()
+
+    def ssh(self, vm, ssh_user="keyvan"):
+        VM(vm).ssh(ssh_user)
+```
+
+This way, in my project I can start a vm with an attached raw device node by running `./bb vm start ubuntu`. block_device is a cross-platform block device selection prompt built into beaglebench. It's great for helping you find and select your SD card.
+
+## Default Commands
 
 It can create an SD card for your beaglebone:
 
