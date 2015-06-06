@@ -5,6 +5,7 @@ containsElement () {
 }
 
 function ssh_beaglebone() {
+source vars.sh
 ssh \
   -o LogLevel=Error \
   -o ConnectTimeout=1 \
