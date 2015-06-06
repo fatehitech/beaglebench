@@ -2,7 +2,7 @@ import os, stat
 import platform_specific as helpers
 from sys import platform as _platform
 
-def select(device_node, node=""):
+def select(node):
     while not is_block_device(node):
         helpers.listBlockDevices()
         helpers.print2("Enter the top-level device path of SD card (e.g. /dev/sdb): ")

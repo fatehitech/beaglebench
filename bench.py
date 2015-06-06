@@ -39,14 +39,14 @@ class Commands:
         '''SSH into the BeagleBone'''
         bb.ssh()
 
-def cli(klass):
+def cli(klass, n=0):
     __name__ = "BeagleBench CLI"
     action = None
-    try: action = getattr(klass(), sys.argv[1])
+    try: action = getattr(klass(), sys.argv[1+n])
     except IndexError: help(klass)
     except AttributeError: help(klass)
     if (action):
-        try: action(*sys.argv[2:len(sys.argv)])
+        try: return action(*sys.argv[2+n:len(sys.argv)])
         except KeyboardInterrupt: sys.exit(1)
 
 if __name__ == "__main__": bench.cli(Commands)
