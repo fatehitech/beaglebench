@@ -30,4 +30,4 @@ def interactive_write(fp, node=""):
     else: print "Bailing"
     
 def write_image(fp, node):
-    call(['sudo', 'dd', 'if='+fp, 'of='+node, 'bs=1M'])
+    call(['sudo', 'dd', 'if='+fp, 'of='+node, 'bs=1m'])
