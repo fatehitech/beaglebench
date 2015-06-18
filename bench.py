@@ -49,4 +49,4 @@ def cli(klass, n=0):
         try: return action(*sys.argv[2+n:len(sys.argv)])
         except KeyboardInterrupt: sys.exit(1)
 
-if __name__ == "__main__": bench.cli(Commands)
+if __name__ == "__main__": cli(Commands)
