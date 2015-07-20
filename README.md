@@ -36,7 +36,7 @@ git clone git@github.com:fatehitech/beaglebench ~/.beaglebench
 mkdir my-bench && cd my-bench
 cat <<EOF > bb
 #!/bin/bash
-python ~/.beaglebench/bench.py $@
+python ~/.beaglebench/bench.py \$@
 EOF
 chmod a+x bb
 ```
